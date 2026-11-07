@@ -88,6 +88,14 @@ export default function DeskScreen({ onBack, dia = 1, onInspect, }) {
   const [objetoSelecionado, setObjetoSelecionado] = useState(null);
   const objetos = objetosPorDia[dia] || objetosPorDia[1];
 
+  function examinarObjeto(objeto) {
+    setObjetoSelecionado(objeto);
+
+    if (onInspect) {
+      onInspect();
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>MESA DE TRABALHO</Text>
@@ -105,7 +113,13 @@ export default function DeskScreen({ onBack, dia = 1, onInspect, }) {
               objetoSelecionado?.id === objeto.id &&
                 styles.selectedCard,
             ]}
-            onPress={() => examinarObjeto(objeto)}
+            onPress={() => {
+              setObjetoSelecionado(objeto);
+
+              if (onInspect) {
+                onInspect();
+              }
+            }}
           >
             <Text style={styles.objectIcon}>
               {objeto.icone}

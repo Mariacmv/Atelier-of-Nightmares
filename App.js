@@ -39,7 +39,6 @@ export default function App() {
     setTela('fimDia');
   }
 
-
   function continuarDia() {
     if (estadoJogo.dia >= 3) {
       setTela('menu');
@@ -51,14 +50,6 @@ export default function App() {
     );
 
     setTela('atelie');
-  }
-
-  function examinarObjeto(objeto) {
-    setObjetoSelecionado(objeto);
-
-    if (onInspect) {
-      onInspect();
-    }
   }
 
   if (tela === 'introducao') {
@@ -108,7 +99,12 @@ export default function App() {
   if (tela === 'celular') {
     return (
       <PhoneScreen
-        onBack={() => setTela('atelie')}
+        onBack={() => {
+          setEstadoJogo((estadoAtual) =>
+            concluirAtividade(estadoAtual, 'celular')
+          );
+          setTela('atelie');
+        }}
         dia={estadoJogo.dia}
       />
     );
@@ -128,6 +124,11 @@ export default function App() {
       <DeskScreen
         onBack={() => setTela('atelie')}
         dia={estadoJogo.dia}
+        onInspect={() => {
+          setEstadoJogo((estadoAtual) =>
+            concluirAtividade(estadoAtual, 'mesa')
+          );
+        }}
       />
     );
   }

@@ -33,13 +33,24 @@ export function atualizarRoupa(estado, roupa) {
 }
 
 export function concluirAtividade(estado, atividade) {
+  if (estado.atividadesConcluidas.includes(atividade)) {
+    return estado;
+  }
+
+  const desgastePorAtividade = {
+    celular: 5,
+    roupa: 5,
+    mesa: 0,
+  };
+
+  const aumento = desgastePorAtividade[atividade] || 0;
+
   return {
     ...estado,
+    desgaste: Math.min(100, estado.desgaste + aumento),
     atividadesConcluidas: [
-      ...new Set([
-        ...estado.atividadesConcluidas,
-        atividade,
-      ]),
+      ...estado.atividadesConcluidas,
+      atividade,
     ],
   };
 }

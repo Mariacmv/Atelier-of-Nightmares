@@ -28,6 +28,23 @@ export default function MirrorScreen({
 }) {
   const estado = estados[estadoReflexo] || estados.normal;
 
+  const aparenciaReflexo = {
+    normal: {
+      fundo: '#211923',
+      moldura: '#806276',
+    },
+    alterado: {
+      fundo: '#241923',
+      moldura: '#9A536B',
+    },
+    deteriorado: {
+      fundo: '#160F16',
+      moldura: '#672D42',
+    },
+  };
+
+  const aparencia = aparenciaReflexo[estadoReflexo] || aparenciaReflexo.normal;
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -37,19 +54,18 @@ export default function MirrorScreen({
 
       <View style={styles.mirrorFrame}>
         <View style={styles.reflection}>
-          <View style={styles.facePlaceholder}>
-            <Text style={styles.placeholderText}>
-              REFLEXO DA PERSONAGEM
-            </Text>
-            <Text style={styles.placeholderText}>
-            {roupaSelecionada
-                ? roupaSelecionada.nome
-                : 'Você ainda não escolheu seu visual.'}
-            </Text>
-            <Text style={styles.placeholderHint}>
-              Ilustração será adicionada posteriormente
-            </Text>
-          </View>
+          <View
+            style={[
+              styles.mirrorFrame,
+              { borderColor: aparencia.moldura },
+            ]}
+          ></View>
+          <View
+            style={[
+              styles.reflection,
+              { backgroundColor: aparencia.fundo },
+            ]}
+          ></View>
         </View>
       </View>
 
@@ -101,13 +117,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   facePlaceholder: {
-    width: '75%',
-    height: '75%',
+    width: '85%',
+    height: '85%',
     backgroundColor: '#382B3A',
-    borderRadius: 100,
+    borderRadius: 130,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 15,
+    padding: 20,
   },
   placeholderText: {
     color: '#D8C3D2',
